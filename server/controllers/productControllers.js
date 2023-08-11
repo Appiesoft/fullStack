@@ -1,6 +1,7 @@
 const Product = require("../models/productModel");
 const catchAsyncErrors = require ("../middlewares/catchAyscError");
 const ApiFeatures = require ("../utils/apifeatures");
+const errorHandler = require("../utils/errorHandler");
 //yahan create product bna k fr route mein import krna
 
 // post all products
@@ -27,11 +28,9 @@ exports.getProductDetails = async (req, res, next) => {
     const product = await Product.findById(req.params.id);
 
     if (!product) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Product not found" });
+      return next(new errorHandler("product not found", 404))
     }
-
+    next();
     res.status(200).json({ success: true, product ,productCount});
   } catch (error) {
     console.error("Error fetching product details:", error);
