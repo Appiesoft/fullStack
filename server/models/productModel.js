@@ -3,16 +3,16 @@ const mongoose = require("mongoose");
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
-    require: [true, "please fill this field"],
+    required: [true, "please fill this field"],
     trim: true,
   },
   description: {
     type: String,
-    require: [true, "please fill this field"],
+    required: [true, "please fill this field"],
   },
   price: {
     type: Number,
-    require: [true, "please fill this field"],
+    required: [true, "please fill this field"],
     maxLength: [8, "price cant exceed 8 no."]
   },
   rating: {
@@ -23,21 +23,21 @@ const productSchema = new mongoose.Schema({
     {
       public_id: {
         type: String,
-        require: true
+        required: true
       },
       url: {
         type: String,
-        require: true
+        required: true
       }
     }
   ],
   category: {
     type: String,
-    require: [true, "please enter product category"],
+    required: [true, "please enter product category"],
   },
   stock: {
     type: Number,
-    require: [true, "please enter product Number"],
+    required: [true, "please enter product Number"],
     maxLength: [4, "price cant exceed 4 no."],
     default:1
   },
@@ -47,20 +47,26 @@ const productSchema = new mongoose.Schema({
   },
   reviews: [
     {
+      user:{
+        type:mongoose.Schema.ObjectId,
+        ref:"User",
+        required:true
+      },
        name:{
         type: String,
-        require:true
+        required:true
        },
        rating: {
         type: Number,
-        require:true
+        required:true
       },
       comment:{
         type:String,
-        require:true
+        required:true
       }
       }
   ],
+ 
   createAt:{
     type:Date,
     default:Date.now

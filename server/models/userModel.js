@@ -7,31 +7,31 @@ const crypto = require("crypto");
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    require: [true, "please enter your name"],
+    required: [true, "please enter your name"],
     maxLength: [30, "name cannt exceed 30 chararcters "],
     minLength: [3, "name should have more than three chararcters"],
     trim: true,
   },
   email: {
     type: String,
-    require: [true, "please enter your email"],
+    required: [true, "please enter your email"],
     unique: true,
     validator: [validator.isEmail, "please enter valid email"],
   },
   password: {
     type: String,
-    require: [true, "please enter your email"],
+    required: [true, "please enter your email"],
     minLength: [8, "name should have more than 8 chararcters"],
     select: false,
   },
   avatar: {
     public_id: {
       type: String,
-      require: true,
+      required: true,
     },
     url: {
       type: String,
-      require: true,
+      required: true,
     },
   },
   role: {
@@ -61,9 +61,21 @@ userSchema.methods.getJWTToken = function(){
   });
 };
 // compare password
-userSchema.methods.comparePassword = async function(password){
-  return await bcrypt.compare(password,this.password);
-}
+
+
+// userSchema.methods.comparePassword = async function(password){
+//   return await bcrypt.compare(password,this.password);
+// }
+
+userSchema.methods.comparePassword = async function(candidatePassword) {
+  try {
+    // Use bcrypt to compare candidatePassword with the hashed password
+    const isMatch = await bcrypt.compare(candidatePassword, this.password);
+    return isMatch; // Return true if passwords match, false otherwise
+  } catch (error) {
+    throw error;
+  }
+};
 // reset password
 userSchema.methods.getResetPasswordToken =function(){
 // crypto.generateKey
