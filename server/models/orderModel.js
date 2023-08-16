@@ -47,61 +47,60 @@ const orderSchema = new mongoose.Schema({
       },
       product: {
         type: mongoose.Schema.ObjectId,
-        ref:"product",
+        ref: "product",
         required: true,
       },
     },
   ],
   user: {
     type: mongoose.Schema.ObjectId,
-    ref:"product",
+    ref: "product",
     required: true,
   },
-  paymentInfo:{
+  paymentInfo: {
     id: {
-        type: String,
-        required: true,
-      },
-      status: {
-        type: String,
-        required: true,
-      },
-
+      type: String,
+      required: true,
+    },
+    status: {
+      type: String,
+      required: true,
+    },
   },
   paidAt: {
-    required:true,
+    required: true,
     type: Date,
     required: true,
   },
-  itemsPrice:{
-    required:true,
-    type:Number,
-    default:0
+  itemsPrice: {
+    required: true,
+    type: Number,
+    default: 0,
   },
-  taxPrice:{
-    required:true,
-    type:Number,
-    default:0
+  taxPrice: {
+    required: true,
+    type: Number,
+    default: 0,
   },
-  shippingPrice:{
-    required:true,
-    type:Number,
-    default:0
+  shippingPrice: {
+    required: true,
+    type: Number,
+    default: 0,
   },
-  totalPrice:{
-    required:true,
-    type:Number,
-    default:0
+  totalPrice: {
+    required: true,
+    type: Number,
+    default: 0,
   },
-  orderStatus:{
-    required:true,
-    type:String,
-    default:"processing"
+  orderStatus: {
+    required: true,
+    type: String,
+    default: "processing",
   },
-  deliverAt:Date,
-  createAt:{
-    type:Date,
+  deliverAt: Date,
+  createAt: {
+    type: Date,
     default: Date.now,
   },
 });
-module.exports = mongoose.model("Order",orderSchema);
+module.exports = mongoose.model("Order", orderSchema);

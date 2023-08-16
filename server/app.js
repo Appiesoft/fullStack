@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const app = express();
 const cookieParser = require("cookie-parser");
 const dotenv = require("dotenv");
@@ -8,17 +9,16 @@ const connectdb = require ("./db/dbconnection")
 // uncaught exception 
 process.on("uncaughtException",(err)=>{
 console.log(`error:${err.message}`);
-console.log(`shutting down rhe server due to uncaught Exception`);
+console.log(`shutting down your server due to uncaught Exception`);
 process.exit(1);
 })
 
 
 dotenv.config();
-const mongoose = require("mongoose");
 connectdb();
 
+// all path routes
 const FindErrorMiddleware = require("./middlewares/error");
-//middleware routes path variable ka kuch v rhkdo 
 const productRoutes = require("./routes/productRoutes");
 const userRouter = require("./routes/userRoutes");
 const orderRoutes = require("./routes/orderRoutes");
