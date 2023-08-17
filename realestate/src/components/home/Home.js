@@ -4,37 +4,41 @@ import home1 from '../static/home1.webp'
 import './Home.css'
 import home4 from '../static/home4.webp'
 import MetaData from "../layout/meta/MetaData";
-
+import Header from '../layout/header/Header'
+import Footer from '../layout/footer/Footer'
 // api import 
 import {getProduct} from '../../thunk/actions/productAction'
 import { useSelector,useDispatch} from "react-redux"
+import Loader from "../layout/loader/Loader";
+import { useAlert } from "react-alert"
 
-const product = {
-  name: "big home luxury",
-  images: [{ url: home1 }],
-  price: "$99",
-  _id: "abhishelk",
-};
 
 const Home = () => {
-
-
-  const dispatch = useDispatch();
-
+  const alert = useAlert();
   const scrollRef = useRef(null);
-
   const handleScrollClick = () => {
     // Scroll to the target element
     scrollRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
+  const dispatch = useDispatch();
+  const {loading,error,products,productsCount} = useSelector(
+    (state) =>state.products
+  );
+ 
+
   useEffect(() => {
+    if (error) {
+      return alert.error(error);
+    } 
   dispatch(getProduct())
-  }, [dispatch])
+  }, [dispatch,error,alert]);
   
   return (
     <>
-    <MetaData title="Real Estate"/>
+   {loading ? <Loader/> : <>
+   <MetaData title="Real Estate"/>
+   <Header/>
       <section className="text-gray-600 body-font  ">
         <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
           <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-start">
@@ -69,8 +73,11 @@ const Home = () => {
       </section>
       <section className="banner"></section>
       <div ref={scrollRef} />
-      <Products product={product} />
-     
+      {/* <Products product={product} /> */}
+      {products && products.map((product)=> <Products product={product} />)}
+      <Footer/>
+   </>
+   }
     </>
   );
 };
