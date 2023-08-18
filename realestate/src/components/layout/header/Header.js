@@ -12,14 +12,16 @@ const Header = () => {
       </svg>
       <span className="ml-3 text-xl text-white">Real Estate</span>
     </NavLink>
-    <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-      <NavLink className="mr-5 hover:text-gray-900">First Link</NavLink>
-      <NavLink className="mr-5 hover:text-gray-900">Second Link</NavLink>
-      <NavLink className="mr-5 hover:text-gray-900">Third Link</NavLink>
-      <NavLink className="mr-5 hover:text-gray-900">Fourth Link</NavLink>
+    <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-xl justify-center">
+      <NavLink to="/" className="mr-5 hover:text-gray-900">Home</NavLink>
+      <NavLink className="mr-5 hover:text-gray-900">About Us</NavLink>
+      <NavLink to='/products'className="mr-5 hover:text-gray-900">Product</NavLink>
+      <NavLink className="mr-5 hover:text-gray-900">Contact Us</NavLink>
+      
     </nav>
-    <button className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base md:mt-0 text-black">LOG OUT
-    </button>
+    <NavLink to="/search" >
+    <span className="inline-flex items-center border-0 py-1 px-3  text-xl  md:mt-0 text-gray-700">Search<i className="ms-3 fa fa-search" aria-hidden="true"></i>
+    </span></NavLink>
   </div>
 </header>
     </>
