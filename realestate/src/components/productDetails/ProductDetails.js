@@ -1,20 +1,22 @@
 import React, { useEffect } from "react";
 import "./ProductDetails.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductDetails } from "../../thunk/actions/productAction";
 import {useParams} from "react-router-dom";
+import { productDetailsAction } from "../../thunk/actions/productAction";
 const ProductDetails = () => {
-  const { id } = useParams();
+  const params = useParams();
+  console.log(params); 
   const dispatch = useDispatch();
-  const { loading, error, product } = useSelector(
+  const productDetails = useSelector(
     (state) => state?.productDetails 
   ) || {} ;
+  const {product,error,loading} = productDetails;
  // Default to empty object if undefined
 
  useEffect(() => {
-  console.log("Dispatching getProductDetails");
-  dispatch(getProductDetails(id));
-}, [dispatch, id]);
+
+  dispatch(productDetailsAction(params));
+}, [dispatch, params]);
 
 if (loading) {
   return <div>{loading}</div>;
@@ -27,17 +29,16 @@ if (error) {
 if (!product) {
   return <div>No product details available.</div>;
 }
-
-
+console.log(product.title,"frewr")
   return (
     <div>
-        {/* {product?.images &&
+        {product?.images &&
           product?.images?.map((item, i) => (
             <section class="text-gray-600 body-font overflow-hidden">
               <div class="container px-5 py-24 mx-auto">
                 <div class="lg:w-4/5 mx-auto flex flex-wrap">
                   <img src={item.url} key={item.url} alt={`${i} slide`} />
-                  <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+                  {/* <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                     <h2 class="text-sm title-font text-gray-500 tracking-widest">
                       BRAND NAME
                     </h2>
@@ -148,14 +149,56 @@ if (!product) {
                         </svg>
                       </button>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </section>
-          ))} */}
-        
+          ))}
+<h2>{product.price}</h2>
     </div>
   );
 };
 
 export default ProductDetails;
+// DataDetailComponent.js
+
+// const ProductDetails = ({ product, loading, error, getProductDetails, match }) => {
+//   const { _id } = useParams();
+
+//   useEffect(() => {
+//     getProductDetails(_id);
+//   }, [_id, getProductDetails]);
+
+//   if (loading) {
+//     return <div>Loading...</div>;
+//   }
+
+//   if (error) {
+//     return <div>Error: {error}</div>;
+//   }
+
+//   return (
+//     <div>
+//       {/* Render data */}
+//       {product && (
+//         <div>
+//           <h2>{product.title}</h2>
+//           <p>{product.description}</p>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// const mapStateToProps = (state) => ({
+//   product: state.productDetails.product, // Use the correct property name
+//   loading: state.productDetails.loading,
+//   error: state.productDetails.error,
+// });
+
+
+// const mapDispatchToProps = {
+//   getProductDetails,
+// };
+
+// export default connect(mapStateToProps, mapDispatchToProps)(ProductDetails);
