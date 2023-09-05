@@ -1,20 +1,24 @@
 import React, { useRef, useState ,useEffect} from "react";
 import Loader from "../layout/loader/Loader";
-import { NavLink ,useHistory} from "react-router-dom";
+import { NavLink ,useNavigate} from "react-router-dom";
 import "./LoginSignUp.css";
 import profile from "../static/home1.webp";
 import { useAlert } from "react-alert";
 import { useSelector, useDispatch } from "react-redux";
-import { clearErrors, login } from "../../thunk/actions/userAction";
-
+import { clearErrors, login,register } from "../../thunk/actions/userAction";
+const initialLoginState = {
+  loginEmail: "",
+  loginPassword: "",
+};
 const LoginSignUp = () => {
+  
   const dispatch = useDispatch();
   const alert = useAlert();
-  // const history = useHistory(); 
+  const navigate = useNavigate(); 
   // for login
   const [loginPassword, setLoginPassword] = useState("");
   const [loginEmail, setLoginEmail] = useState("");
-
+  const [loginFields, setLoginFields] = useState(initialLoginState);
   // for register
   const [user, setUser] = useState({
     name: "",
@@ -33,7 +37,7 @@ const LoginSignUp = () => {
 
   const loginSubmit = (e) => {
     e.preventDefault();
-    dispatch(login(loginEmail,loginPassword))
+    dispatch(login(loginFields.loginEmail, loginFields.loginPassword))
     console.log("loginSubmit");
   };
 
@@ -44,6 +48,7 @@ const LoginSignUp = () => {
     myFrom.set("email", email);
     myFrom.set("password", password);
     myFrom.set("avatar", avatar);
+    dispatch(register(myFrom))
     console.log("registerSubmit");
   };
 
@@ -86,10 +91,12 @@ const LoginSignUp = () => {
       alert.error(error);
       dispatch(clearErrors());
     }
-    // if (isAuthenticated) {
-    //   history.push("/account");
-    // }
-  }, [dispatch, error, alert, isAuthenticated]);
+    if (isAuthenticated) {
+      // Clear the login fields on successful login
+      setLoginFields(initialLoginState);
+      navigate("/account");
+    }
+  }, [dispatch, error, alert, isAuthenticated,navigate]);
 
 
   return (
@@ -106,23 +113,33 @@ const LoginSignUp = () => {
         <div className="loginEmail">
           <i class="fa fa-envelope" aria-hidden="true"></i>
           <input
-            type="email"
-            placeholder="Email"
-            value={loginEmail}
-            name="email"
-            required
-            onChange={(e) => setLoginEmail(e.target.value)}
-          />
+                type="email"
+                placeholder="Email"
+                value={loginFields.loginEmail}
+                name="email"
+                required
+                onChange={(e) =>
+                  setLoginFields({
+                    ...loginFields,
+                    loginEmail: e.target.value,
+                  })
+                }
+              />
         </div>
         <div className="loginPassword">
           <i class="fa fa-key" aria-hidden="true"></i>
           <input
-            type="password"
-            placeholder="Password"
-            value={loginPassword}
-            name="password"
-            onChange={(e) => setLoginPassword(e.target.value)}
-          />
+                type="password"
+                placeholder="Password"
+                value={loginFields.loginPassword}
+                name="password"
+                onChange={(e) =>
+                  setLoginFields({
+                    ...loginFields,
+                    loginPassword: e.target.value,
+                  })
+                }
+              />
         </div>
         <NavLink
           to="/password/forgot"

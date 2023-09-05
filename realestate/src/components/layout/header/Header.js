@@ -4,7 +4,7 @@ import './Header.css'
 const Header = () => {
   return (
     <>
-<header className=" body-font text-white header-banner">
+<header className=" body-font text-white header-banner position-relative">
   <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center ">
     <NavLink className="flex title-font font-medium items-center text-gray-900  md:mb-0 ">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-10 h-10 text-white p-2 bg-white-500 rounded-full" viewBox="0 0 24 24">

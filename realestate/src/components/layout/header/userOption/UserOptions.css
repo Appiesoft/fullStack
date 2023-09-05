@@ -1,0 +1,15 @@
+.SpeedDialIcon {
+    position: fixed;
+    right: 37px;
+    top: 38px;
+    border-radius: 50%;
+    width: 3%;
+    height: 6%;
+    background-position: center;
+    background-size: cover;
+}
+button.MuiButtonBase-root.MuiFab-root.MuiFab-circular.MuiFab-sizeLarge.MuiFab-primary.MuiFab-root.MuiFab-circular.MuiFab-sizeLarge.MuiFab-primary.MuiSpeedDial-fab.css-7dv1rb-MuiButtonBase-root-MuiFab-root-MuiSpeedDial-fab {
+    /* background: none; */
+    background: transparent !important;
+    box-shadow: none;
+}
